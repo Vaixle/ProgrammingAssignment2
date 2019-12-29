@@ -1,15 +1,36 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
-
-makeCacheMatrix <- function(x = matrix()) {
-
+## This function gets the matrix argument and stores data about it 
+##and this function can do four actions.
+##Values:
+##value makeMatrix stores matrix
+##value solveMatrix stores result action solve
+##Actions:
+##set() stores matrix
+##get() getting saved matrix
+##setSolve() sets value of action solve to value solveMatrix
+##getSolve() getting value of solveMatrix
+makeCacheMatrix<- function(makeMatrix=matrix()){
+  makeMatrix
+  solveMatrix = NULL
+  set= function(x){makeMatrix<<-x
+  solveMatrix<<-NULL
+  }
+  get= function() makeMatrix
+  setSolve =function(solveMatrix) solveMatrix<<-solveMatrix
+  getSolve= function() solveMatrix
+  list(set=set,get=get,setSolve=setSolve,getSolve=getSolve)
 }
 
-
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+## This function gets the makeCacheMatrix argument and compute solve and
+##saves result to solveMatrix or return cahing value of solveMatrix.
+##She can use all action from makeCacheMatrix
+cacheSolve<-function(makeMatrix){
+  solveMatrix<-makeMatrix$getSolve()
+  if(!is.null(solveMatrix)){
+    message("getting cached data")
+    return(solveMatrix)
+  }
+  data<-makeMatrix$get()
+  solveMatrix<-solve(data)
+  makeMatrix$setSolve(solveMatrix)
+  solveMatrix
 }
